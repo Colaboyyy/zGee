@@ -1,4 +1,4 @@
-module gee
+module github.com/Colaboyyy/zGee/gee
 
 go 1.18
 
