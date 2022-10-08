@@ -23,6 +23,8 @@ type Context struct {
 	index    int
 	// engine pointer
 	engine *Engine
+	// query result
+	SqlRes SqlResponse
 }
 
 func (c *Context) Param(key string) string {
@@ -73,6 +75,7 @@ func (c *Context) String(code int, format string, values ...interface{}) {
 
 func (c *Context) JSON(code int, obj interface{}) {
 	c.SetHeader("Content-Type", "application/json")
+	c.SetHeader("Access-Control-Allow-Origin", "*")
 	c.Status(code)
 	encoder := json.NewEncoder(c.Writer)
 	if err := encoder.Encode(obj); err != nil {
