@@ -21,6 +21,7 @@ func FormatAsDate(t time.Time) string {
 func main() {
 	r := gee.New()
 	r.Use(gee.Logger())
+	//告诉模板引擎，现在定义了一个FormatAsDate这个函数，这一步要在解析模板之前
 	r.SetFuncMap(template.FuncMap{
 		"FormatAsDate": FormatAsDate,
 	})
@@ -46,6 +47,9 @@ func main() {
 			"title": "tommyWeb",
 			"now":   time.Now().UTC(),
 		})
+	})
+	r.GET("/web", func(ctx *gee.Context) {
+		ctx.HTML(http.StatusOK, "index.tmpl", nil)
 	})
 
 	r.RUN(":9999")
