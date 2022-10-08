@@ -101,6 +101,17 @@ func (group *RouterGroup) Static(relativePath string, root string) {
 	group.GET(urlPattern, handler)
 }
 
+func (group *RouterGroup) StaticFs(relativePath string, fs http.FileSystem) {
+	if strings.Contains(relativePath, ":") || strings.Contains(relativePath, "*") {
+		panic("URL parameters can not be used when serving a static folder")
+	}
+	handler := group.createStaticHandler(relativePath, fs)
+	urlPattern := path.Join(relativePath, "/*filepath")
+
+	// Register GET and HEAD handlers
+	group.GET(urlPattern, handler)
+}
+
 // ---HTML---
 // SetFuncMap 自定义渲染函数
 func (engine *Engine) SetFuncMap(funcMap template.FuncMap) {
