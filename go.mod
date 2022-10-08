@@ -1,4 +1,4 @@
-module zGee
+module github.com/Colaboyyy/zGee
 
 go 1.18
 
